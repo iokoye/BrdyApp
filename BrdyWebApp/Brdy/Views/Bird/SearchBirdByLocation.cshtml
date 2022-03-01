@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Brdy.Models.SightingDetail>
+
+@{
+    ViewData["Title"] = "SearchBirdByLocation";
+}
+<style>
+    .table {
+        color: white;
+        background-color: black;
+        opacity: 0.7;
+    }
+    .tr {
+        width: 50px;
+    }
+</style>
+
+<h1 style="display: flex; justify-content: center;">Location Results</h1>
+<div id="map"></div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr class="tr">
+
+                <th>
+                    @Html.DisplayNameFor(model => model.comName)
+                </th>
+                <th >
+                    @Html.DisplayNameFor(model => model.sciName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.locName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.obsDt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.howMany)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lng)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddTo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.comName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sciName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.locName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.obsDt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.howMany)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lng)
+                    </td>
+                    <td align="center">
+                        @Html.ActionLink("WishList", "Wish", "WishList", new { CommonName = item.comName })
+                        @Html.ActionLink("SeenList", "Seen", "SeenBird", new { CommonName = item.comName, ScientificName = item.sciName, Latitude = item.lat, Longitude = item.lng })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{
+        var first = Model.First();
+
+    }
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqIdprb3rLozalirJ1Ubfc4x15U0unu8U&callback=initMap&libraries=&v=weekly"
+            async></script>
+
+    <script type="text/javascript">     
+
+        function initMap()
+        {
+            const map = new google.maps.Map(document.getElementById("map"),
+            {
+                zoom: 6,
+                center: { lat: @first.lat, lng: @first.lng },
+            });
+            @foreach (var item in Model)
+            {
+                @:new google.maps.Marker({
+                @:    position: { lat: @item.lat, lng: @item.lng },
+                @:    map,
+                @:    title: "@item.comName",
+                @:});
+            }
+        }
+    </script>
+}

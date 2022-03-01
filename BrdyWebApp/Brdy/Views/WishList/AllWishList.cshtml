@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Brdy.Data.Models.WishList>
+
+@{
+    ViewData["Title"] = "AllWishList";
+}
+<style>
+    .table {
+        color: white;
+        background-color: black;
+        opacity: 0.7;
+    }
+    .h1 {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+</style>
+
+<h1 class="h1">All Users Wish List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CommonName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommonName)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

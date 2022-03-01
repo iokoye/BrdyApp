@@ -1,0 +1,35 @@
+﻿@model Brdy.Models.SightingDetail
+@{ ViewData["Title"] = "Home Page"; }
+
+<style>
+    .jumbotron {
+        position: relative;
+        top: 250px;
+        background-color: #585959;
+    }
+    .welcome{
+       text-align: center;
+       padding: 50px;
+    }
+    .div.one{
+        color:beige;
+    }
+</style>
+
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to BRDY!</h1>
+        <p class="lead">Brdy Is a one stop shop for all your Bird watching needs. Join some of the elite Bird watching clubs!!!!</p>
+        <hr class="my-4">
+
+        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register" role="button">Join Now</a>
+    </div>
+}
+
+@if(User.Identity.IsAuthenticated)
+{
+    <h1 class="welcome" >Welcome to Brdy!</h1>
+}
+
